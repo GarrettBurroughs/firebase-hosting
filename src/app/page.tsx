@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main className="content">
-      <h1 className="heading">Next.js on Firebase App Hosting</h1>
+      <h1 className="heading">Hosted Web App</h1>
 
       <section className="features">
         <article className="card">
