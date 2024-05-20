@@ -193,11 +193,19 @@ body {
   text-wrap: pretty;
 }
 
+.feature-grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+.feature-label {
+  text-align: center;
+  padding-left: 10px;
+}
 .card {
   flex-direction: column;
   padding: 24px;
   gap: 12px;
-  max-width: 360px;
+  width: 100%;
 }
 
 .card h2 {
@@ -205,9 +213,10 @@ body {
   line-height: 1.2;
   font-weight: 500;
   letter-spacing: -2%;
+  text-align: center;
 }
 .card p {
-  font-size: 13px;
+  font-size: 18px;
   line-height: 1.5;
   color: var(--secondary-contrast);
   letter-spacing: -1%;
@@ -218,6 +227,30 @@ body {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+
+.idea-input {
+  margin: auto;
+  width: 25%;
+  height: 30px;
+  border-radius: 10px;
+  border: 0px;
+  box-shadow: 0px 0px 10px #3179bd;
+  padding: 10px;
+}
+
+.generate-project{
+  background-color: #68adea;
+  border: 0px;
+  border-radius: 10px;
+  width: 200px;
+  height: 50px;
+  box-shadow: 0px 0px 10px #3179bd;
+  margin: auto;
+}
+.generate-project:hover {
+  background-color: #a3cbef;
+}
+
 
 .links-container {
   padding-top: 24px;
@@ -279,19 +312,7 @@ body {
   pointer-events: none;
 }
 
-.card:not(:first-child)::after {
-  width: 10px;
-  left: -10px;
-  mask: url("/between-cards.svg") no-repeat center / contain;
-  -webkit-mask: url("/between-cards.svg") no-repeat center / contain;
-}
 
-.links a:not(:first-child)::after {
-  width: 30px;
-  left: calc(-20px);
-  mask: url("/between-links.svg") no-repeat center / contain;
-  -webkit-mask: url("/between-links.svg") no-repeat center / contain;
-}
 
 @media only screen and (max-width: 1023px) {
   .heading {

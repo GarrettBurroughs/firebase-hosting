@@ -1,53 +1,60 @@
+"use client"
 import Link from "next/link";
+import { useEffect } from "react";
+import {run } from "../lib/vertex";
+
+
 
 export default function Home() {
+  const features = [
+    "App Check",
+    "App Hosting",
+    "Authentication",
+    "Data Connect",
+    "Extensions",
+    "Firestore Database",
+    "Functions",
+    "Hosting",
+    "Machine Learning",
+    "Realtime Database",
+    "Storage",
+    "A/B Testing",
+    "AdMob",
+    "App Distribution",
+    "Crashlytics",
+    "Dynamic Links",
+    "Messaging",
+    "Performance",
+    "Release Monitoring",
+    "Remote Config",
+    "Test Lab",
+    "Dashboard",
+    "Realtime Analytics",
+    "Events",
+    "Key Events",
+    "Audiences",
+    "Custom Definitions",
+    "Latest Release",
+    "DebugView",
+  ];
+
   return (
     <main className="content">
-      <h1 className="heading">Hosted Web App</h1>
-
-      <section className="features">
-        <article className="card">
-          <h2>Scalable, serverless backends</h2>
-          <p>
-            Dynamic content is served by{" "}
-            <Link
-              href="https://cloud.google.com/run/docs/overview/what-is-cloud-run"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Cloud Run
-            </Link>
-            , a fully managed container that scales up and down with demand.
-            Visit{" "}
-            <Link href="/ssr">
-              <code>/ssr</code>
-            </Link>{" "}
-            and{" "}
-            <Link href="/ssr/streaming">
-              <code>/ssr/streaming</code>
-            </Link>{" "}
-            to see the server in action.
+      <h1 className="heading">Start your Firebase Project Here</h1>
+      <article className="card">
+        <h2>1. Select Your Features</h2>
+        <div className="feature-grid">
+          {features.map((featureName, idx) => (<p className="feature-option" key={idx}>
+            <input type="checkbox" value={featureName} id={`feature-${idx}`} ></input>
+            <label htmlFor={`feature-${idx}`} className="feature-label" >{featureName}</label>
           </p>
-        </article>
-        <article className="card">
-          <h2>Global CDN</h2>
-          <p>
-            Cached content is served by{" "}
-            <Link
-              href="https://cloud.google.com/cdn/docs/overview"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Google Cloud CDN
-            </Link>
-            , a fast and secure way to host cached content globally. Visit
-            <Link href="/ssg">
-              {" "}
-              <code>/ssg</code>
-            </Link>{" "}
-          </p>
-        </article>
-      </section>
+          ))}
+        </div>
+        <h2>2. Give an idea or leave blank to have gemini create one for you</h2>
+        <input type="text" className="idea-input" placeholder="Enter your idea"></input>
+        <h2>3. Have Gemini scaffold out your project!</h2>
+        <input type="button" value="Generate Project" className="generate-project"></input>
+      </article>
     </main>
   );
 }
