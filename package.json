@@ -1,10 +1,11 @@
 {
-  "name": "firebase-app-hosting-nextjs",
+  "name": "firestarter-ui",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build-service-worker": "npx esbuild auth-service-worker.js --bundle --outfile=public/auth-service-worker.js",
     "start": "next start",
     "lint": "next lint"
   },

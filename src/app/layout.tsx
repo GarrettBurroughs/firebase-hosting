@@ -2,15 +2,18 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 import { Header } from "./components";
+import { getAuthenticatedAppForUser } from "../lib/serverApp";
 
 export const metadata: Metadata = {
   title: "Next.js on Firebase App Hosting",
   description: "",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+
+  const { currentUser } = await getAuthenticatedAppForUser();
   return (
     <html lang="en" className="dark-theme">
       <head>
@@ -22,7 +25,7 @@ export default function RootLayout({
       </head>
       <body>
         <div className="dots" />
-        <Header />
+        <Header currentUser={currentUser?.toJSON()}/>
         {children}
         <div className="bottom-gradient" />
       </body>
