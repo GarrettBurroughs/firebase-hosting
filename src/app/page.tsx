@@ -1,7 +1,8 @@
 "use client"
 import Link from "next/link";
-import { useEffect } from "react";
+import { MouseEventHandler, useEffect } from "react";
 import {run } from "../lib/vertex";
+import { generateMenuItem } from "../lib/functions";
 
 
 
@@ -37,7 +38,10 @@ export default function Home() {
     "Latest Release",
     "DebugView",
   ];
-
+  const onclick: MouseEventHandler<HTMLInputElement> = (e) => {
+    e.preventDefault();
+    generateMenuItem().then(alert).catch(console.error);
+  }
   return (
     <main className="content">
       <h1 className="heading">Start your Firebase Project Here</h1>
@@ -53,7 +57,7 @@ export default function Home() {
         <h2>2. Give an idea or leave blank to have gemini create one for you</h2>
         <input type="text" className="idea-input" placeholder="Enter your idea"></input>
         <h2>3. Have Gemini scaffold out your project!</h2>
-        <input type="button" value="Generate Project" className="generate-project"></input>
+        <input type="button" value="Generate Project" className="generate-project" onClick={onclick}></input>
       </article>
     </main>
   );
