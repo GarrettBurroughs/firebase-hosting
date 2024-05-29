@@ -1,11 +1,27 @@
 import { httpsCallable } from "firebase/functions";
 import { functions } from "./clientApp"
+import { Todo } from "../app/projects/[id]/page";
 
-export async function generateMenuItem() {
-    const menuSuggestionFlow = httpsCallable(
+export async function createProject(topic: string, features: string[], userEmail: string) {
+    const projectScaffoldingFlow = httpsCallable(
         functions,
-        'menuSuggestionFlow', 
+        'projectScaffoldingFlow', 
       );
-    const response = await menuSuggestionFlow("Ai App Developer"); 
+    const response = await projectScaffoldingFlow({
+      topic: topic,
+      features: features, 
+      userEmail: userEmail
+    }); 
+    return response.data;
+}
+export async function refineTask(task: Todo) {
+  console.log(task);
+  console.log("Starting Update on ", task);
+  const refineTaskFlow = httpsCallable(
+    functions, 
+    'refineTaskFlow',
+  );
+    const response = await refineTaskFlow(task); 
+    console.log(response);
     return response.data;
 }

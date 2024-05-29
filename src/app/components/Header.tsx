@@ -13,7 +13,7 @@ import {
 import { MouseEventHandler, useEffect, useState } from "react";
 import { firebaseConfig } from "../../lib/config";
 import { User } from "firebase/auth";
-function useUserSession(initialUser: User | null) {
+export function useUserSession(initialUser: User | null) {
   // The initialUser comes from the server via a server component
   const [user, setUser] = useState(initialUser);
   const router = useRouter();
@@ -73,6 +73,8 @@ export function Header({initialUser}: any) {
     <>
 
       <header className="header">
+        <Link href="/">Home </Link> | 
+        <Link href="/listings">Projects</Link>
         <Firebase />
         {user ? <button onClick={handleSignOut}>Sign Out</button>: <button onClick={handleSignIn}>Sign in with Google</button>}
       </header>
