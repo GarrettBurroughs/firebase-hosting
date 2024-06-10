@@ -1,40 +1,33 @@
 "use client"
-import { ChangeEventHandler, useState } from "react";
-import { Project, TodoStatus } from "./page"
+import { ChangeEventHandler, MouseEventHandler, useState } from "react";
+import { Project, Todo, TodoStatus } from "./page"
 import { deleteTask, updateStatus } from "../../../lib/firestore";
 import { refineTask } from "../../../lib/functions";
 import styles from "./project.module.css";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { SiGooglegemini } from "react-icons/si";
+import { Loading } from "../../components/Loading";
 
-export const TodoDisplay = ({ project, idx }: { project: Project, idx: number }) => {
-    const [newStatus, setNewStatus] = useState<TodoStatus>('Todo'); // Initial state
-    const getStatusClass = () => {
-        const statusClasses = {
-            "Todo": styles.col1,
-            "In Progress": styles.col2,
-            "Complete": styles.col3,
-        }
-        return statusClasses[project.todos[idx].status];
-    }
-    const handleStatusChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
-        setNewStatus(event.target.value as TodoStatus);
-    };
-    const todo = project.todos[idx];
-    return (<article className={`${styles["todo-item"]} ${getStatusClass()}`} key={todo.task}>
+export const TodoDisplay = ({ todo, deleteTask, setRefinedTodos }: { todo: Todo, deleteTask: MouseEventHandler<HTMLButtonElement>, setRefinedTodos: (refinedTodos: Todo[]) => void }) => {
+    const [loading, setLoading] = useState<boolean>(false);
+    return (<article className={styles["todo-item"]} key={todo.task}>
         <div className={styles.todoTitle}>
             <h3>{todo.task}</h3>
-            <span onClick={() => { deleteTask(project, idx) }}><FaRegTrashAlt className={styles.delete} /></span>
+            <span onClick={deleteTask} className="drag-exempt"><FaRegTrashAlt className={styles.delete + " drag-exempt"} /></span>
 
         </div>
-        <hr className={styles.line}/>
+        <hr className={styles.line} />
         <p className={styles.description}>{todo.description}</p>
-        {/* <select value={newStatus} onChange={handleStatusChange}>
-            <option value="Todo">Todo</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Complete">Complete</option>
-        </select> */}
-        {/* <button onClick={() => { updateStatus(project, idx, newStatus) }}>Update Status</button> */}
-        <button onClick={() => { refineTask(todo) }} className={`generate-project ${styles.refine}`}><SiGooglegemini />Refine</button>
+        {!loading ? <button onClick={() => {
+            refineTask(todo).then((newTodos) => {
+                setRefinedTodos(newTodos);
+                setLoading(false);
+            }).catch((error) => {
+                alert(`Got Error: ${error}. Please try again`)
+                setLoading(false);
+            });
+            setLoading(true);
+        }} className={`generate-project ${styles.refine}`}><SiGooglegemini />Refine</button>
+            : <Loading></Loading>}
     </article>);
 }

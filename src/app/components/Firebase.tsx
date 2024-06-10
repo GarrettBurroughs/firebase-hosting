@@ -1,6 +1,6 @@
 export function Firebase() {
   return (
-    <>
+    <div className="firestarter">
     {/* <svg
       width="115"
       height="32"
@@ -16,10 +16,9 @@ export function Firebase() {
 
     </svg> */}
 
-    <img src="firebase-icon.svg">
+    <img src="/firebase-icon.svg" width="60px" className="heading" />
 
-    </img>
-    <p className="heading">Firestarter</p>
-    </>
+    <span className="heading">Firestarter</span>
+    </div>
   );
 }

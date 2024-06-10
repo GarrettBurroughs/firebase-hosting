@@ -11,6 +11,7 @@ export function ProjectListing({ projectId, projectName }: { projectId: string, 
         deleteProject(projectId).then(() => {window.location.reload()});
     }
     return <Link className={styles["project-link"]} href={`/projects/${projectId}`}><article className={styles.listing}>
+        <div></div>
         <p>{projectName}</p>
         <span onClick={handleDeleteProject}><FaRegTrashAlt className={styles.delete} /></span>
     </article>

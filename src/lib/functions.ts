@@ -14,7 +14,7 @@ export async function createProject(topic: string, features: string[], userEmail
     }); 
     return response.data;
 }
-export async function refineTask(task: Todo) {
+export async function refineTask(task: Todo): Promise<Todo[]> {
   console.log(task);
   console.log("Starting Update on ", task);
   const refineTaskFlow = httpsCallable(
@@ -23,5 +23,5 @@ export async function refineTask(task: Todo) {
   );
     const response = await refineTaskFlow(task); 
     console.log(response);
-    return response.data;
+    return response.data as Todo[];
 }

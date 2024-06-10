@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { getProjectDetails } from "../../../lib/firestore";
+import { getProjectDetails, updateStatus } from "../../../lib/firestore";
 import { ProjectDetails } from "./projectDetails";
 import { Loading } from "../../components/Loading";
 
@@ -33,9 +33,23 @@ export default function ProjectView({ params } : { params: { id: string } }) {
             console.error(error);
             setError("There was an error loading the project: " + error); 
         });
-    })
+    }, []);
+
+    useEffect(() => {
+        console.log(projectDetails);
+    }, [projectDetails]);
+
+    const updateTodo = (idx: number, status: TodoStatus) => {
+        if (!projectDetails) return;
+        const newDetails = { ...projectDetails }
+        newDetails.todos[idx].status = status as TodoStatus;
+        console.log("Updating", idx, status);
+        setProjectDetails(newDetails);
+        updateStatus(projectDetails, idx, status);
+        // Update in firebase too
+    }
     return <>
         {error && <p>{error}</p>}
-        {!error && (projectDetails ? <ProjectDetails project={projectDetails} projectId={params.id} /> : <Loading />)}
+        {!error && (projectDetails ? <ProjectDetails project={projectDetails} projectId={params.id} updateTodo={updateTodo}/> : <Loading />)}
     </>
 }
