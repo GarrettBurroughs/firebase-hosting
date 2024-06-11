@@ -5,7 +5,9 @@ import { getInstallations, getToken } from "firebase/installations";
 // this is set during install
 let firebaseConfig;
 
-self.addEventListener('install', event => {
+const getFirebseConfig = () => {
+
+  if (firebaseConfig) return firebaseConfig;
   // extract firebase config from query string
   const serializedFirebaseConfig = new URL(location).searchParams.get('firebaseConfig');
   
@@ -15,7 +17,8 @@ self.addEventListener('install', event => {
   
   firebaseConfig = JSON.parse(serializedFirebaseConfig);
   console.log("Service worker installed with Firebase config", firebaseConfig);
-});
+  return firebaseConfig;
+}
 
 self.addEventListener("fetch", (event) => {
   const { origin } = new URL(event.request.url);
@@ -24,7 +27,8 @@ self.addEventListener("fetch", (event) => {
 });
 
 async function fetchWithFirebaseHeaders(request) {
-  const app = initializeApp(firebaseConfig);
+  const config = getFirebseConfig();
+  const app = initializeApp(config);
   const auth = getAuth(app);
   const installations = getInstallations(app);
   const headers = new Headers(request.headers);

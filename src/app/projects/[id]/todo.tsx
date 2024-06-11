@@ -8,7 +8,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { SiGooglegemini } from "react-icons/si";
 import { Loading } from "../../components/Loading";
 
-export const TodoDisplay = ({ todo, deleteTask, setRefinedTodos }: { todo: Todo, deleteTask: MouseEventHandler<HTMLButtonElement>, setRefinedTodos: (refinedTodos: Todo[]) => void }) => {
+export const TodoDisplay = ({ todo, project, deleteTask, setRefinedTodos }: { todo: Todo, project: Project, deleteTask: MouseEventHandler<HTMLButtonElement>, setRefinedTodos: (refinedTodos: Todo[]) => void }) => {
     const [loading, setLoading] = useState<boolean>(false);
     return (<article className={styles["todo-item"]} key={todo.task}>
         <div className={styles.todoTitle}>
@@ -19,7 +19,7 @@ export const TodoDisplay = ({ todo, deleteTask, setRefinedTodos }: { todo: Todo,
         <hr className={styles.line} />
         <p className={styles.description}>{todo.description}</p>
         {!loading ? <button onClick={() => {
-            refineTask(todo).then((newTodos) => {
+            refineTask(todo, project).then((newTodos) => {
                 setRefinedTodos(newTodos);
                 setLoading(false);
             }).catch((error) => {

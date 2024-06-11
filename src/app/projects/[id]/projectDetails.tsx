@@ -34,6 +34,7 @@ export const ProjectDetails = ({ project, projectId, updateTodo }: { project: Pr
             return todo.status === status ?
                 <Draggable id={'' + idx} key={`${todo.status} ${idx}`}>
                     <TodoDisplay
+                        project={project}
                         todo={todo}
                         deleteTask={(e) => {
                             e.stopPropagation();

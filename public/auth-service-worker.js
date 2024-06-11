@@ -7998,21 +7998,24 @@
 
   // auth-service-worker.js
   var firebaseConfig;
-  self.addEventListener("install", (event) => {
+  var getFirebseConfig = () => {
+    if (firebaseConfig) return firebaseConfig;
     const serializedFirebaseConfig = new URL(location).searchParams.get("firebaseConfig");
     if (!serializedFirebaseConfig) {
       throw new Error("Firebase Config object not found in service worker query string.");
     }
     firebaseConfig = JSON.parse(serializedFirebaseConfig);
     console.log("Service worker installed with Firebase config", firebaseConfig);
-  });
+    return firebaseConfig;
+  };
   self.addEventListener("fetch", (event) => {
     const { origin } = new URL(event.request.url);
     if (origin !== self.location.origin) return;
     event.respondWith(fetchWithFirebaseHeaders(event.request));
   });
   async function fetchWithFirebaseHeaders(request) {
-    const app = initializeApp(firebaseConfig);
+    const config = getFirebseConfig();
+    const app = initializeApp(config);
     const auth = getAuth(app);
     const installations = getInstallations(app);
     const headers = new Headers(request.headers);
