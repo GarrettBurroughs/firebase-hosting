@@ -12,6 +12,7 @@ export function ProjectListing({ projectId, projectName }: { projectId: string, 
     }
     return <Link className={styles["project-link"]} href={`/projects/${projectId}`}><article className={styles.listing}>
         <div></div>
+        {/* {process.env.STAGING && <h2>In staging</h2>} */}
         <p>{projectName}</p>
         <span onClick={handleDeleteProject}><FaRegTrashAlt className={styles.delete} /></span>
     </article>
